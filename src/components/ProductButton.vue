@@ -85,5 +85,10 @@ export default {
       margin-right: 10px;
     }
   }
+
+  .cta-button:hover {
+    cursor: pointer;
+    background-color: rgba($orange, 0.8);
+  }
 }
 </style>

@@ -4,19 +4,16 @@
       <div class="logo">
         <img src="../assets/images/logo.svg" alt="logo" />
       </div>
-      <ul
-        class="flex-item flex-item_ul"
-        v-for="(item, key) in navItems"
-        v-bind:key="key"
-      >
-        <li>
+      <ul class="flex-item flex-item_ul">
+        <li v-for="(item, key) in navItems" v-bind:key="key">
           <a href="#">{{ item }}</a>
         </li>
       </ul>
     </div>
     <div class="flex-item">
       <div class="flex-items">
-        <img src="../assets/images/icon-cart.svg" alt="cart" />
+        <div class="circle"></div>
+        <img src="../assets/images/icon-cart.svg" alt="cart" class="cart" />
       </div>
       <div class="flex-items">
         <img
@@ -79,13 +76,32 @@ export default {
         color: $dark-grayish-blue;
         text-decoration: none;
       }
+      a:hover {
+        color: $very-dark-blue;
+      }
     }
 
     .flex-items {
       margin-right: 2.5rem;
+      position: relative;
+
+      .cart {
+        z-index: 1;
+      }
 
       .avatar {
         height: 3rem;
+      }
+
+      .circle {
+        height: 18px;
+        width: 18px;
+        border-radius: 50%;
+        background-color: orange;
+        position: absolute;
+        z-index: 4;
+        left: 12px;
+        top: -10px;
       }
     }
   }
