@@ -1,6 +1,6 @@
 <template>
   <div class="price">
-    <h2 class="price_heading">$125.00</h2>
+    <h2 class="price_heading">${{ price }}</h2>
     <span class="price_breadcrumb">50%</span>
     <span class="price_original"> $250.00</span>
   </div>
@@ -9,6 +9,11 @@
 <script>
 export default {
   name: "ProductPrice",
+  computed: {
+    price: function () {
+      return this.$store.state.product.price;
+    },
+  },
 };
 </script>
 

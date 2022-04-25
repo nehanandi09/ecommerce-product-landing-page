@@ -12,7 +12,7 @@
         <img src="../assets/images/icon-plus.svg" alt="" />
       </button>
     </div>
-    <button class="cta-button">
+    <button class="cta-button" @click.prevent="incrementCartCount">
       <img src="../assets/images/icon-cart.svg" alt="" class="cart-image" />
       Add to cart
     </button>
@@ -38,6 +38,9 @@ export default {
     },
     removeItem() {
       this.cartitems--;
+    },
+    incrementCartCount() {
+      this.$store.dispatch("incrementCartCount", this.cartitems);
     },
   },
 };
@@ -68,22 +71,42 @@ export default {
   }
 
   .cta-button {
-    margin-left: 1rem;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    padding-left: 3.5rem;
-    padding-right: 3.5rem;
     border: none;
-    background-color: $orange;
+    font-size: inherit;
+    color: inherit;
+    margin-left: 1rem;
+    padding: 15px 3rem;
+    background: $orange;
+    cursor: pointer;
+    letter-spacing: 1px;
     border-radius: 10px;
     color: $white;
+    outline: none;
+    position: relative;
     font-size: 1rem;
     font-weight: bold;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
 
     .cart-image {
       height: 16px;
       margin-right: 10px;
     }
+  }
+
+  .cta-button:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+  }
+
+  .cta-button:active {
+    background: #2980b9;
+    top: 2px;
   }
 
   .cta-button:hover {

@@ -12,15 +12,31 @@
     </div>
     <div class="flex-item">
       <div class="flex-items">
-        <div class="circle"></div>
-        <img src="../assets/images/icon-cart.svg" alt="cart" class="cart" />
+        <div v-if="cartItems > 0" class="circle">
+          <span class="cart-value">{{ cartItems }}</span>
+        </div>
+        <img
+          src="../assets/images/icon-cart.svg"
+          alt="cart"
+          class="cart"
+          @click="showModal"
+        />
       </div>
-      <div class="flex-items">
+      <div class="flex-items avatar-img">
         <img
           src="../assets/images/image-avatar.png"
           alt="avatar"
           class="avatar"
+          @click="showModal"
         />
+      </div>
+      <div class="show-cart-view" :class="isShowModal ? 'cart-view' : ''">
+        <h2 class="cart-view-title">Cart</h2>
+        <p v-if="cartItems === 0" class="cart-view-body">Your Cart is empty</p>
+        <p v-else>
+          <span> You have {{ cartItems }} items in your cart </span>
+          <span> Total: $ {{ cartTotal }} </span>
+        </p>
       </div>
     </div>
   </nav>
@@ -35,7 +51,22 @@ export default {
       img: {
         logo: "../assets/images/logo.svg",
       },
+      isShowModal: false,
     };
+  },
+  computed: {
+    cartItems: function () {
+      return this.$store.state.cart.cartCount;
+    },
+    cartTotal: function () {
+      return this.$store.state.cart.cartCount * this.$store.state.product.price;
+    },
+  },
+  methods: {
+    showModal: function () {
+      //set display to block to show modal
+      this.isShowModal = !this.isShowModal;
+    },
   },
 };
 </script>
@@ -94,14 +125,69 @@ export default {
       }
 
       .circle {
-        height: 18px;
-        width: 18px;
+        height: 20px;
+        width: 20px;
         border-radius: 50%;
         background-color: orange;
         position: absolute;
         z-index: 4;
         left: 12px;
         top: -10px;
+      }
+
+      .cart-value {
+        text-align: center;
+        display: block;
+        font-size: 0.75rem;
+        margin: 0 auto;
+        color: white;
+        font-weight: bold;
+      }
+    }
+
+    .avatar-img {
+      position: relative;
+      z-index: 5;
+    }
+
+    .show-cart-view {
+      display: none;
+    }
+
+    .cart-view {
+      display: inline;
+      position: absolute;
+      top: 107px;
+      right: 180px;
+      background-color: white;
+      border-radius: 5px;
+      padding: 10px;
+      z-index: 10;
+      min-width: 20rem;
+      min-height: 180px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      font-weight: bold;
+
+      &-title {
+        color: $very-dark-blue;
+        font-size: 1rem;
+        padding: 0.5rem;
+        border-bottom: 1px solid $grayish-blue;
+      }
+
+      &-body {
+        padding: 0.5rem;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+      }
+
+      span {
+        letter-spacing: 2px;
+        display: block;
+        font-weight: 300;
       }
     }
   }
